@@ -1,7 +1,7 @@
 use hex::{decode, encode};
 
 pub fn decode_hex(hex_str: &str) -> Result<Vec<u8>, String> {
-    hex::decode(hex_str).map_err(|e| e.to_string())
+    decode(hex_str).map_err(|e| e.to_string())
 }
 
 pub fn to_big_endian(bytes: &[u8]) -> Vec<u8> {
@@ -15,7 +15,7 @@ pub fn bytes_to_hex(bytes: &[u8]) -> String {
 }
 
 pub fn hex_to_bytes(hex: &str) -> Result<Vec<u8>, hex::FromHexError> {
-    hex::decode(hex)
+    decode(hex)
 }
 
 pub fn swap_endian_u32(num: u32) -> [u8; 4] {
@@ -92,7 +92,7 @@ impl Opcode {
         match byte {
             0xac => Ok(Opcode::OpChecksig),
             0x76 => Ok(Opcode::OpDup),
-            _ => Err(format!("Invalid opcode: 0x00")),
+            _ => Err("Invalid opcode: 0x00".to_string()),
         }
     }
 }
